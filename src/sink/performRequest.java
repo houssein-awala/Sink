@@ -35,7 +35,7 @@ public class performRequest extends Thread{
             
             connectionWithRouterForRequest cWithRouterForRequest = new connectionWithRouterForRequest(request, this);
             cWithRouterForRequest.start();
-            this.wait();
+            
             // connect to the sensor and wait it 
             this.request=cWithRouterForRequest.getRequest();
             // this is the final request returned from the sensor and contain the data replying from sensor you can  display it 
