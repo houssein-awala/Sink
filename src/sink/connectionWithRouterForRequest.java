@@ -15,7 +15,7 @@ import static sink.Sink.Requests;
 
 /**
  *
- * @author JALAL
+ * @author mostafa slim
  */
 public class connectionWithRouterForRequest extends Thread{
 
@@ -36,18 +36,13 @@ public class connectionWithRouterForRequest extends Thread{
             Socket socket =  new Socket("router",9999);
             ObjectOutputStream out =  new ObjectOutputStream(socket.getOutputStream());
             ObjectInputStream in =  new ObjectInputStream(socket.getInputStream());
-            RC4Security security =  new RC4Security();
-            String masterkey  = security.gnerateKey();
-            security sec1 =  new security();
-            sec1.encrypt(sec1.pubKey,masterkey);
-            this.request.setMasterKey(masterkey.getBytes());
             out.writeObject(this.request);
             boolean readed =in.readBoolean();
             if(readed){
-            Requests.put(this.request.requestID,this.request);
-             connectionWithRouterForGetRequestResult cForGetRequestResult   = new connectionWithRouterForGetRequestResult(in);
+             connectionWithRouterForGetRequestResult cForGetRequestResult   = new connectionWithRouterForGetRequestResult(in,out);
              cForGetRequestResult.start();
             }
+            out.writeBoolean(true);
         } catch (IOException ex) {
             Logger.getLogger(connectionWithRouterForRequest.class.getName()).log(Level.SEVERE, null, ex);
         } catch (Exception ex) {
